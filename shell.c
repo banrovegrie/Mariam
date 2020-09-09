@@ -93,5 +93,7 @@ int main(int argc, char *argv[])
             ECHO(echo_line, d);
         else if (strcmp(args[0], "pinfo") == 0)
             PINFO(args);
+        else if (strcmp(args[0], "ls") == 0)
+            LSMAIN(echo_line);
     }
 }
