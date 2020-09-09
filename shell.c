@@ -18,16 +18,16 @@ void parse(char *line, char **args, char *d)
 
 int initialise()
 {
-    //gethostname(systemname, host_max);
+    gethostname(systemname, host_max);
 
-    struct utsname uts;
+    /*struct utsname uts;
     int sysname = uname(&uts);
     if (sysname != 0)
     {
         perror("Error:");
         exit(1);
     }
-    strcpy(systemname, uts.sysname);
+    strcpy(systemname, uts.sysname);*/
 
     getlogin_r(username, user_max);
     getcwd(home, path_max);
