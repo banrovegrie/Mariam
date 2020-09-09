@@ -20,6 +20,7 @@ int LS(char *directory, int A)
         else printf("%s\n", LIST[i]->d_name);
     }
 
+    fflush(stdout);
     return 0;
 }
 
@@ -71,76 +72,96 @@ int LSL(char *directory, int A)
             return 0;
         }
     }
+
+    fflush(stdout);
     return 0;
 }
 
-int LSMAIN(char *line)
+int LSMAIN(char **args)
 {
-    int index = 0, A = 0, L = 0, count = 0;
+    int A = 0, L = 0, count = 0;
 
-    char *d = " \t\n";
-    char *foo = strtok(line, d);
-    char *str[100] = {NULL};
-
-    while (foo != NULL)
+    for (int i = 1; args[i] != NULL; i++)
     {
-        printf("%s\n", foo);
-        if (foo[0] == '-')
-        {
-            if (strcmp(foo, "-l") == 0) L = 1;
-            else if (strcmp(foo, "-a") == 0) A = 1;
-            else if (strcmp(foo, "-la") == 0) A = 1, L = 1;
-            else if (strcmp(foo, "-al") == 0) A = 1, L = 1;
-            count --;
-        }
-
-        str[index] = foo, foo = strtok(NULL, d);
-        str[index][strlen(str[index])] = '\0';
-        index += 1;
+        if (strcmp(args[i], "-l") == 0) L = 1, count--;
+        else if (strcmp(args[i], "-a") == 0) A = 1, count--;
+        else if (strcmp(args[i], "-la") == 0) A = 1, L = 1, count--;
+        else if (strcmp(args[i], "-al") == 0) A = 1, L = 1, count--;
         count++;
+
+        int err = 0;
+        for (int check = 0; check < strlen(args[i]); check++)
+        {
+            if (args[i][check] >= 'a' && args[i][check] <= 'z');
+            else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
+            else if (args[i][check] >= '0' && args[i][check] <= '9');
+            else if (args[i][check] == '-' || args[i][check] == '/' || args[i][check] == '\0' || args[i][check] == '_');
+            else if (args[i][check] == '#' || args[i][check] == '.' || args[i][check] == '*' || args[i][check] == '~');
+            else if (args[i][check] == '?' || args[i][check] == '\'' || args[i][check] == '\"');
+            else
+            {
+                err = 1;
+                break;
+            }
+        }
+        if (err) count--;
     }
 
-    printf("L:%d A:%d index:%d\n", L, A, index);
+    //printf("L:%d A:%d count:%d\n", L, A, count);
 
-    if (count == 1)
+    if (count == 0)
     {
         if (L == 1) LSL(".", A);
         else LS(".", A);
         return 0;
     }
 
-    /*for (int i = 1; i < index; i++)
+    for (int i = 1; args[i] != NULL; i++)
     {
+        if (args[i][0] == '-') continue;
+
+        int err = 0;
+        for (int check = 0; check < strlen(args[i]); check++)
+        {
+            if (args[i][check] >= 'a' && args[i][check] <= 'z');
+            else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
+            else if (args[i][check] >= '0' && args[i][check] <= '9');
+            else if (args[i][check] == '-' || args[i][check] == '/' || args[i][check] == '\0' || args[i][check] == '_');
+            else if (args[i][check] == '#' || args[i][check] == '.' || args[i][check] == '*' || args[i][check] == '~');
+            else if (args[i][check] == '?' || args[i][check] == '\'' || args[i][check] == '\"');
+            else
+            {
+                err = 1;
+                break;
+            }
+        }
+        if (err) continue;
+
         char *rel_path = malloc(path_max * sizeof(char));
         if (getcwd(rel_path, path_max) == NULL) perror("error in cwd");
 
         char *resolved_path = malloc(path_max * sizeof(char));
 
-        printf("%s\n", str[i]);
+        //printf("%s\n", args[i]);
 
-        if (str[i][0] == '~')
+        if (args[i][0] == '~')
         {
             strcpy(rel_path, home);
             int l = strlen(home);
 
             int ind = 0;
-            for (ind = 1; str[i][ind] != '\0'; ind++)
-                rel_path[ind + l - 1] = str[i][ind];
+            for (ind = 1; args[i][ind] != '\0'; ind++)
+                rel_path[ind + l - 1] = args[i][ind];
             rel_path[ind + l - 1] = '\0';
 
-        } else if (str[i][0] == '/')
+        } else if (args[i][0] == '/')
         {
-            strcpy(rel_path, str[i]);
-            strcat(rel_path,"\0");
-        }
-        else if(str[i][0] == '\0' || str[i] == NULL)
-        {
-            //empty
-        }
-        else
+            strcpy(rel_path, args[i]);
+            strcat(rel_path, "\0");
+        } else
         {
             strcat(rel_path, "/");
-            strcat(rel_path, str[i]);
+            strcat(rel_path, args[i]);
             strcat(rel_path, "\0");
         }
 
@@ -157,8 +178,8 @@ int LSMAIN(char *line)
 
         free(rel_path);
         free(resolved_path);
-        rel_path = NULL, resolved_path = NULL;
-    }*/
+    }
 
+    fflush(stdout);
     return 0;
 }

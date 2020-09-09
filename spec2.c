@@ -8,11 +8,11 @@ int CD(char **args)
     strcpy(foo, home);
 
     int l = strlen(home);
-    //printf("%s\n", home);
+    //printf("%s\n", args[1]);
     if (args[1] == NULL || strcmp(args[1], "\0") == 0) chdir(home);
     else if (args[1][0] != '~')
     {
-        if (chdir(args[1]) != 0) perror("error (a) in cd");
+        if (chdir(args[1]) != 0) perror("error in cd");
     } else if (args[1][0] == '~')
     {
         int i = 0;
@@ -20,8 +20,8 @@ int CD(char **args)
             foo[i + l - 1] = args[1][i];
         foo[i + l - 1] = '\0';
 
-        if (chdir(foo) != 0) perror("error (b) in cd");
-    } else if (chdir(args[1]) != 0) perror("error (c) in cd");
+        if (chdir(foo) != 0) perror("error in cd");
+    } else if (chdir(args[1]) != 0) perror("error in cd");
 
     fflush(stdout);
     return 0;

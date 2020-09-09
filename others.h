@@ -33,4 +33,4 @@ int LS(char *directory, int A);
 
 int LSL(char *directory, int A);
 
-int LSMAIN(char *line);
+int LSMAIN(char **args);
