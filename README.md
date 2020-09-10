@@ -25,7 +25,7 @@ A Basic Shell implemented in C. The `prompt` displays the USERNAME and HOSTNAME 
 6. `pinfo [pid]`: Returns details of the task mentioned as PID. If PID is not mentioned then it operates on `a.out`/the specified shell program executable.
     This has been implemented by scrapping `/proc/[PID]/exec` and `/proc/[PID]/status`. Absolute Executable Path has also been printed for the user's benefit. Implemented in `pinfo.c`.
 
-N.B.: Unnecessary spaces, tabs etc. have been accounted for in LS, CD, PWD and ECHO. Regarding LS, position of `[directory]` and `[flags]` are invariant wrt the result. 
+**N.B:** Unnecessary spaces, tabs etc. have been accounted for in LS, CD, PWD and ECHO. Regarding LS, position of `[directory]` and `[flags]` are invariant wrt the result. 
 
 ## Foreground and Background Processes
 1. All other commands are treated as system commands like emacs, vim, clear etc.
@@ -37,7 +37,7 @@ Implemented in `syscmd.c`. Used FORK and EXECVP commands to get the work done.
 1. When the background process terminates it's PID and EXIT STATUS are shown.
 2. INTERRUPT and TERMINATE signals have also been well inplemented.
 
-N.B.: Why name of the process is not returned upon termination of the background process?
+**N.B:** Why name of the process is not returned upon termination of the background process?
 Reason: It is highly unsafe to use malloc() inside the respective `signal_handler()` functions. `fprintf` is relatively stable and thus has been used only to directly print the PID associated. Printing the name of the process has been ignored.
 
 Implemented in `handle.c` under the function `FUNC_H()`.
