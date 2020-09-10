@@ -41,4 +41,4 @@ Reason: It is highly unsafe to use malloc() inside the respective `signal_handle
 ## Issues
 1. A better global parser is to made.
 2. Stress testing is to performed.
-3. Possible errors related to `ls -l [-a]` implementation is to be looked into.
+3. Possible errors related to `ls -l [-a]` implementation are to be looked into.
