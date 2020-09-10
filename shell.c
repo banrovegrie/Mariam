@@ -66,6 +66,10 @@ int main(int argc, char *argv[])
     printf("HELLO, THERE!");
     fflush(stdout);
 
+    signal(SIGINT, FUNC_H);
+    signal(SIGTERM, FUNC_H);
+    signal(SIGCHLD, FUNC_H);
+
     initialise();
 
     while (1)

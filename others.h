@@ -40,3 +40,5 @@ int FGPRO(char **args);
 int BGPRO(char **args);
 
 int PRO(char **args);
+
+void FUNC_H(int signum);
