@@ -51,10 +51,15 @@ int LSL(char *directory, int A)
 
     for (int i = 0; i < NUM; i++)
     {
+        char *str = malloc(100 * sizeof(char));
+        strcpy(str, directory);
+        strcat(str, "/");
+        strcat(str, LIST[i]->d_name);
+
         if (LIST[i]->d_name[0] == '.' && A == 0)
         {
             continue;
-        } else if (stat(LIST[i]->d_name, &ST) == 0)
+        } else if (stat(str, &ST) == 0)
         {
             printf("%c", (S_ISDIR(ST.st_mode)) ? 'd' : '-');
             printf("%c", (ST.st_mode & S_IRUSR) ? 'r' : '-');
@@ -83,6 +88,8 @@ int LSL(char *directory, int A)
         {
             perror("error in ls -l");
         }
+        free(str);
+        str = NULL;
     }
 
     fflush(stdout);
