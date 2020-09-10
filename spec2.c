@@ -37,7 +37,7 @@ int PWD()
 {
     char foo[path_max];
     if (getcwd(foo, path_max) == NULL) perror("error in pwd");
-    printf("%s", foo);
+    printf("%s\n", foo);
 
     fflush(stdout);
     return 0;
@@ -54,6 +54,7 @@ int ECHO(char *line, char *d)
     while (foo != NULL)
         printf("%s ", foo), foo = strtok(NULL, d);
 
+    printf("\n");
     fflush(stdout);
     return 0;
 }

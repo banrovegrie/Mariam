@@ -69,6 +69,31 @@ int UI()
     return 0;
 }
 
+void execute(char *line)
+{
+    size_t buff_size = 1000;
+    char *echo_line = (char *) malloc(buff_size * sizeof(char));
+    strcpy(echo_line, line);
+
+    char *args[100] = {NULL};
+    char d[10] = " \t\n";
+    parse(line, args, d);
+
+    if (strcmp(args[0], "exit") == 0)
+        exit(0);
+    else if (strcmp(args[0], "cd") == 0)
+        CD(args);
+    else if (strcmp(args[0], "pwd") == 0)
+        PWD();
+    else if (strcmp(args[0], "echo") == 0)
+        ECHO(echo_line, d);
+    else if (strcmp(args[0], "pinfo") == 0)
+        PINFO(args);
+    else if (strcmp(args[0], "ls") == 0)
+        LSMAIN(args);
+    else PRO(args);
+}
+
 int main(int argc, char *argv[])
 {
     printf("HELLO, THERE!");
@@ -88,25 +113,13 @@ int main(int argc, char *argv[])
         char *line = (char *) malloc(buff_size * sizeof(char));
         read(0, line, buff_size * sizeof(char));
 
-        char *echo_line = (char *) malloc(buff_size * sizeof(char));
-        strcpy(echo_line, line);
+        char *block[20] = {NULL};
 
-        char *args[100] = {NULL};
-        char d[10] = " \t\n";
-        parse(line, args, d);
+        parse(line, block, ";");
 
-        if (strcmp(args[0], "exit") == 0)
-            exit(0);
-        else if (strcmp(args[0], "cd") == 0)
-            CD(args);
-        else if (strcmp(args[0], "pwd") == 0)
-            PWD();
-        else if (strcmp(args[0], "echo") == 0)
-            ECHO(echo_line, d);
-        else if (strcmp(args[0], "pinfo") == 0)
-            PINFO(args);
-        else if (strcmp(args[0], "ls") == 0)
-            LSMAIN(args);
-        else PRO(args);
+        for(int i = 0; block[i] != NULL; i++)
+        {
+            execute(block[i]);
+        }
     }
 }
