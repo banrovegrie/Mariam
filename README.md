@@ -29,7 +29,7 @@ N.B.: Unnecessary spaces, tabs etc. have been accounted for in LS, CD, PWD and E
 
 ## Foreground and Background Processes
 1. All other commands are treated as system commands like emacs, vim, clear etc.
-2. To run a process in the background, follow the command with a '&' symbol. Eg. emacs &.
+2. To run a process in the background, follow the command with a '&' symbol. Eg. emacs &. Implemented by orphaning the child process.
 
 ## Signal Handling
 1. When the background process terminates it's PID and EXIT STATUS are shown.
