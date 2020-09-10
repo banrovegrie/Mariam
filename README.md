@@ -11,7 +11,7 @@ A Basic Shell implemented in C. The `prompt` displays the USERNAME and HOSTNAME 
 
 ## Features
 
-1. `pwd`: Displays the name of the working directory.
+1. `pwd`: Displays the name of the working directory. Implemented as PWD() in (spec2.c)[spec2.c].
 
 2. `ls [-l -a] [directory]`: List all files and folders in a specified directory in alphabetical order.
 
