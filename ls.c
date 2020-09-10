@@ -68,8 +68,7 @@ int LSL(char *directory, int A)
             printf("%s\n", LIST[i]->d_name);
         } else
         {
-            perror("error in permissions/details");
-            return 0;
+            perror("error in ls -l");
         }
     }
 
@@ -165,7 +164,7 @@ int LSMAIN(char **args)
             strcat(rel_path, "\0");
         }
 
-        printf("%s\n", rel_path);
+        //printf("%s\n", rel_path);
         if (realpath(rel_path, resolved_path) == NULL)
         {
             perror("error in locating directory");
