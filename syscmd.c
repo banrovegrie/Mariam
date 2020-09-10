@@ -1,5 +1,14 @@
 #include "others.h"
 
+/*
+ *This file deals with functions related to running foreground
+ * and background processes
+ * 1. FGPRO() for foreground
+ * 2. BGPRO() for background
+ * 3. PRO() serves as the decider with checks the presence of '&'
+ * and sends the process/command into foreground or background respectively
+ */
+
 int FGPRO(char **args)
 {
     int status, pid;

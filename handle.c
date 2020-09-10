@@ -3,20 +3,30 @@
 void FUNC_H(int signum)
 {
     int PID = getpid(), status;
+
     if (signum == SIGINT)
     {
+        /*
+        * Handle interrupt in particular
+        */
         fprintf(stderr, "\nprocess with pid:%d interrupted\n", PID);
         fflush(stderr);
         fflush(stdout);
         exit(1);
     } else if (signum == SIGTERM)
     {
+        /*
+         * Handle terminate in particular
+         */
         fprintf(stderr, "\nprocess with pid:%d terminated\n", PID);
         fflush(stderr);
         fflush(stdout);
         exit(1);
     } else if (signum == SIGCHLD)
     {
+        /*
+         * Child handling in particular with associated status and PID
+         */
         while (waitpid(-1, &status, 0) > 0)
         {
             if (WIFEXITED(status))

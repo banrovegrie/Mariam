@@ -1,5 +1,13 @@
 #include "others.h"
 
+/*
+ * The MAIN shell function with:
+ * 1. UI() for prompt
+ * 2. initialise() for getting user and host names
+ * 3. main() which binds the entire shell together decides on the argument input by user
+ * and runs/performs the required command
+ */
+
 char systemname[host_max], username[user_max], home[path_max], path[path_max];
 
 void parse(char *line, char **args, char *d)

@@ -1,7 +1,15 @@
 #include "others.h"
-
+/*
+ * External (global in shell.c) variables
+ */
 extern char systemname[host_max], username[user_max], home[path_max], path[path_max];
 
+/*
+ * Function to implement ls [-a]
+ * When A = 1, we detect -a flag
+ * When A = 0, we execute only ls
+ * Respective perror and printf statements included
+ */
 int LS(char *directory, int A)
 {
     struct dirent **LIST;
@@ -24,6 +32,11 @@ int LS(char *directory, int A)
     return 0;
 }
 
+/*
+ * Function to implement ls -l
+ * with all permissions
+ * As in the previous case, if A = 1, -a functionality is implemented
+ */
 int LSL(char *directory, int A)
 {
     struct dirent **LIST;
@@ -76,6 +89,11 @@ int LSL(char *directory, int A)
     return 0;
 }
 
+/*
+ * The LS main() function with implementation of figuring out the correct absolute path
+ * acceptable to scandir.
+ * Some restrictions on file names have been put forward.
+ */
 int LSMAIN(char **args)
 {
     int A = 0, L = 0, count = 0;

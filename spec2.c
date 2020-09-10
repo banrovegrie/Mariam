@@ -2,6 +2,9 @@
 
 extern char systemname[host_max], username[user_max], home[path_max], path[path_max];
 
+/*
+ * Function for CD
+ */
 int CD(char **args)
 {
     char foo[path_max];
@@ -27,6 +30,9 @@ int CD(char **args)
     return 0;
 }
 
+/*
+ * Function for PWD
+ */
 int PWD()
 {
     char foo[path_max];
@@ -37,6 +43,9 @@ int PWD()
     return 0;
 }
 
+/*
+ * Function for ECHO
+ */
 int ECHO(char *line, char *d)
 {
     char *foo = strtok(line, d);

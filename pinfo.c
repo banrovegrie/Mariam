@@ -2,6 +2,10 @@
 
 extern char systemname[host_max], username[user_max], home[path_max], path[path_max];
 
+/*
+ *The function for PINFO details regarding implementation
+ * has been explained in README.md
+ */
 int PINFO(char **args)
 {
 
