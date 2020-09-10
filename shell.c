@@ -63,7 +63,7 @@ int UI()
 
 int main(int argc, char *argv[])
 {
-    printf("HELLO, THERE! Welcome to Mariam.");
+    printf("HELLO, THERE!");
     fflush(stdout);
 
     initialise();
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
         size_t buff_size = 1000;
         char *line = (char *) malloc(buff_size * sizeof(char));
-        read(0, line, buff_size);
+        read(0, line, buff_size * sizeof(char));
 
         char *echo_line = (char *) malloc(buff_size * sizeof(char));
         strcpy(echo_line, line);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         parse(line, args, d);
 
         if (strcmp(args[0], "exit") == 0)
-            return 0;
+            exit(0);
         else if (strcmp(args[0], "cd") == 0)
             CD(args);
         else if (strcmp(args[0], "pwd") == 0)
@@ -95,5 +95,6 @@ int main(int argc, char *argv[])
             PINFO(args);
         else if (strcmp(args[0], "ls") == 0)
             LSMAIN(args);
+        else PRO(args);
     }
 }

@@ -34,3 +34,9 @@ int LS(char *directory, int A);
 int LSL(char *directory, int A);
 
 int LSMAIN(char **args);
+
+int FGPRO(char **args);
+
+int BGPRO(char **args);
+
+int PRO(char **args);
