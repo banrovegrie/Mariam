@@ -15,8 +15,7 @@ int FGPRO(char **args)
     char *arr[100] = {NULL};
 
     arr[0] = malloc(100 * sizeof(char));
-    strcpy(arr[0], "/usr/bin/");
-    strcat(arr[0], args[0]);
+    strcpy(arr[0], args[0]);
 
     for (int i = 1; args[i] != NULL; i++)
     {
@@ -53,8 +52,7 @@ int BGPRO(char **args)
     char *arr[1000] = {NULL};
 
     arr[0] = malloc(100 * sizeof(char));
-    strcpy(arr[0], "/usr/bin/");
-    strcat(arr[0], args[0]);
+    strcpy(arr[0], args[0]);
 
     for (int i = 1; args[i] != NULL && strcmp(args[i], "&") == 0; i++)
     {
