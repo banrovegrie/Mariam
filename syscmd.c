@@ -5,7 +5,7 @@
  * and background processes
  * 1. FGPRO() for foreground
  * 2. BGPRO() for background
- * 3. PRO() serves as the decider with checks the presence of '&'
+ * 3. PRO() serves as the decider with checks the presence of "&"
  * and sends the process/command into foreground or background respectively
  */
 
