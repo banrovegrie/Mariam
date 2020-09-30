@@ -114,7 +114,7 @@ int LSMAIN(char **args)
         count++;
 
         int err = 0;
-        for (int check = 0; check < strlen(args[i]); check++)
+        /*for (int check = 0; check < strlen(args[i]); check++)
         {
             if (args[i][check] >= 'a' && args[i][check] <= 'z');
             else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
@@ -127,7 +127,7 @@ int LSMAIN(char **args)
                 err = 1;
                 break;
             }
-        }
+        }*/
         if (err) count--;
     }
 
@@ -145,7 +145,7 @@ int LSMAIN(char **args)
         if (args[i][0] == '-') continue;
 
         int err = 0;
-        for (int check = 0; check < strlen(args[i]); check++)
+        /*for (int check = 0; check < strlen(args[i]); check++)
         {
             if (args[i][check] >= 'a' && args[i][check] <= 'z');
             else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
@@ -158,7 +158,7 @@ int LSMAIN(char **args)
                 err = 1;
                 break;
             }
-        }
+        }*/
         if (err) continue;
 
         char *rel_path = malloc(path_max * sizeof(char));
