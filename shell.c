@@ -13,12 +13,11 @@ char systemname[host_max], username[user_max], home[path_max], path[path_max];
 void parse(char *line, char **args, char *d)
 {
     int index = 0;
-    char *foo = strtok(line, d);
+    char *foo = strtok_r(line, d);
 
     while (foo != NULL)
     {
-        args[index] = foo, foo = strtok(NULL, d);
-        args[index][strlen(args[index])] = '\0';
+        args[index] = foo, foo = strtok_r(NULL, d);
         index += 1;
     }
     fflush(stdout);
@@ -96,7 +95,7 @@ void execute(char *line)
 
 int main(int argc, char *argv[])
 {
-    printf("HELLO, THERE!");
+    printf("HELLO, THERE! Welocome to Mariam :P");
     fflush(stdout);
 
     signal(SIGINT, FUNC_H);
