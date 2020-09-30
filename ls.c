@@ -112,26 +112,9 @@ int LSMAIN(char **args)
         else if (strcmp(args[i], "-la") == 0) A = 1, L = 1, count--;
         else if (strcmp(args[i], "-al") == 0) A = 1, L = 1, count--;
         count++;
-
-        int err = 0;
-        /*for (int check = 0; check < strlen(args[i]); check++)
-        {
-            if (args[i][check] >= 'a' && args[i][check] <= 'z');
-            else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
-            else if (args[i][check] >= '0' && args[i][check] <= '9');
-            else if (args[i][check] == '-' || args[i][check] == '/' || args[i][check] == '\0' || args[i][check] == '_');
-            else if (args[i][check] == '#' || args[i][check] == '.' || args[i][check] == '*' || args[i][check] == '~');
-            else if (args[i][check] == '?' || args[i][check] == '\'' || args[i][check] == '\"');
-            else
-            {
-                err = 1;
-                break;
-            }
-        }*/
-        if (err) count--;
     }
 
-    printf("L:%d A:%d count:%d\n", L, A, count);
+    //printf("L:%d A:%d count:%d\n", L, A, count);
 
     if (count == 0)
     {
@@ -143,23 +126,6 @@ int LSMAIN(char **args)
     for (int i = 1; args[i] != NULL; i++)
     {
         if (args[i][0] == '-') continue;
-
-        int err = 0;
-        /*for (int check = 0; check < strlen(args[i]); check++)
-        {
-            if (args[i][check] >= 'a' && args[i][check] <= 'z');
-            else if (args[i][check] >= 'A' && args[i][check] <= 'Z');
-            else if (args[i][check] >= '0' && args[i][check] <= '9');
-            else if (args[i][check] == '-' || args[i][check] == '/' || args[i][check] == '\0' || args[i][check] == '_');
-            else if (args[i][check] == '#' || args[i][check] == '.' || args[i][check] == '*' || args[i][check] == '~');
-            else if (args[i][check] == '?' || args[i][check] == '\'' || args[i][check] == '\"');
-            else
-            {
-                err = 1;
-                break;
-            }
-        }*/
-        if (err) continue;
 
         char *rel_path = malloc(path_max * sizeof(char));
         if (getcwd(rel_path, path_max) == NULL) perror("error in cwd");
@@ -180,13 +146,11 @@ int LSMAIN(char **args)
 
         } else if (args[i][0] == '/')
         {
-            strcpy(rel_path, args[i]);
-            strcat(rel_path, "\0");
+            strcpy(rel_path, args[i]), strcat(rel_path, "\0");
+
         } else
         {
-            strcat(rel_path, "/");
-            strcat(rel_path, args[i]);
-            strcat(rel_path, "\0");
+            strcat(rel_path, "/"), strcat(rel_path, args[i]), strcat(rel_path, "\0");
         }
 
         //printf("%s\n", rel_path);
