@@ -46,13 +46,10 @@ int PWD()
 /*
  * Function for ECHO
  */
-int ECHO(char *line, char *d)
+int ECHO(char **args)
 {
-    char *foo = strtok(line, d);
-    foo = strtok(NULL, d);
-
-    while (foo != NULL)
-        printf("%s ", foo), foo = strtok(NULL, d);
+    for(int i = 1; args[i] != NULL; i++)
+        printf("%s ", args[i]);
 
     printf("\n");
     fflush(stdout);

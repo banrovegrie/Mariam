@@ -71,9 +71,9 @@ int UI()
 
 void execute(char *line)
 {
-    size_t buff_size = 1000;
-    char *echo_line = (char *) malloc(buff_size * sizeof(char));
-    strcpy(echo_line, line);
+    //size_t buff_size = 1000;
+    //char *echo_line = (char *) malloc(buff_size * sizeof(char));
+    //strcpy(echo_line, line);
 
     char *args[100] = {NULL};
     char d[10] = " \t\n";
@@ -86,7 +86,7 @@ void execute(char *line)
     else if (strcmp(args[0], "pwd") == 0)
         PWD();
     else if (strcmp(args[0], "echo") == 0)
-        ECHO(echo_line, d);
+        ECHO(args);
     else if (strcmp(args[0], "pinfo") == 0)
         PINFO(args);
     else if (strcmp(args[0], "ls") == 0)
@@ -111,11 +111,13 @@ int main(int argc, char *argv[])
 
         size_t buff_size = 1000;
         char *line = (char *) malloc(buff_size * sizeof(char));
-        read(0, line, buff_size * sizeof(char));
+        int r_value = read(0, line, buff_size * sizeof(char));
+        line = realloc(line, (sizeof(char) * (r_value + 1)));
+        line[r_value] = '\0';
 
         char *block[20] = {NULL};
 
-        parse(line, block, ";");
+        parse(line, block, ";\n");
 
         for(int i = 0; block[i] != NULL; i++)
         {

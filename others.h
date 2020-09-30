@@ -37,7 +37,7 @@ int CD(char **args);
 int PWD();
 
 //Function for echo
-int ECHO(char *line, char *d);
+int ECHO(char **args);
 
 //Function for pinfo
 int PINFO(char **args);
