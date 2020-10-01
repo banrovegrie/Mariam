@@ -84,6 +84,9 @@ void check_redirection(char **args)
 	}
 	else
 	{
+		signal(SIGINT, SIG_DFL);
+    	signal(SIGTSTP, SIG_DFL);
+		
 		waitpid(pid, NULL, 0);
 	    dup2(f_stdin, 0), dup2(f_stdout, 1);
 	}

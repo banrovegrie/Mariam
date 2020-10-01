@@ -28,7 +28,11 @@ int BGPRO(char **args)
     }
 
     if (pid)
+    {
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTSTP, SIG_DFL);
         return 0;
+    }
     else
     {
         if (setpgid(0, 0) == -1)

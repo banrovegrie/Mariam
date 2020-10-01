@@ -92,8 +92,8 @@ int main(int argc, char *argv[])
     printf("HELLO, THERE! Welocome to Mariam :P");
     fflush(stdout);
 
-    signal(SIGINT, FUNC_H);
-    signal(SIGTERM, FUNC_H);
+    signal(SIGINT, SIG_IGN);
+    signal(SIGTSTP, SIG_IGN);
     signal(SIGCHLD, FUNC_H);
 
     initialise();
