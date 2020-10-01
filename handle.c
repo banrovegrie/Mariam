@@ -13,21 +13,12 @@ void FUNC_H(int signum)
         fflush(stderr);
         fflush(stdout);
         exit(1);
-    } else if (signum == SIGTERM)
-    {
-        /*
-         * Handle terminate in particular
-         */
-        fprintf(stderr, "\nprocess with pid:%d terminated\n", PID);
-        fflush(stderr);
-        fflush(stdout);
-        exit(1);
     } else if (signum == SIGCHLD)
     {
         /*
          * Child handling in particular with associated status and PID
          */
-        while (waitpid(-1, &status, 0) > 0)
+        while (waitpid(-1, &status, WNOHANG | WUNTRACED | WCONTINUED) > 0)
         {
             if (WIFEXITED(status))
                 fprintf(stderr, "\npid: %d exited, status = %d\n", PID, WEXITSTATUS(status));
@@ -37,8 +28,7 @@ void FUNC_H(int signum)
                 fprintf(stderr, "\npid: %d stopped by signal %d\n", PID, WSTOPSIG(status));
             else if (WIFCONTINUED(status))
                 fprintf(stderr, "\npid: %d continued\n", PID);
-            fflush(stderr);
-            fflush(stdout);
+        
             return;
         }
     }

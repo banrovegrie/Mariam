@@ -5,9 +5,7 @@ extern char systemname[host_max], username[user_max], home[path_max], path[path_
 void DO(char **args)
 {
 
-    if (strcmp(args[0], "exit") == 0)
-        exit(0);
-    else if (strcmp(args[0], "cd") == 0)
+    if (strcmp(args[0], "cd") == 0)
         CD(args);
     else if (strcmp(args[0], "pwd") == 0)
         PWD();

@@ -65,6 +65,9 @@ void execute(char *line)
     char d[10] = " \t\n";
     parse(line, args, d);
 
+    if (strcmp(args[0], "exit") == 0)
+        exit(0);
+
     int bg_flag = 0;
     for (int i = 1; args[i] != NULL; i++)
     {
@@ -80,6 +83,8 @@ void execute(char *line)
 
 int main(int argc, char *argv[])
 {
+    int f_stdin = dup(0), f_stdout = dup(1);
+
     printf("HELLO, THERE! Welocome to Mariam :P");
     fflush(stdout);
 
@@ -92,7 +97,8 @@ int main(int argc, char *argv[])
     while (1)
     {
         UI();
-
+        dup2(f_stdin, 0), dup2(f_stdout, 1);
+        
         size_t buff_size = 1000;
         char *line = (char *) malloc(buff_size * sizeof(char));
         int r_value = read(0, line, buff_size * sizeof(char));
@@ -107,5 +113,7 @@ int main(int argc, char *argv[])
         {
             execute(block[i]);
         }
+
+        fflush(stdin), fflush(stderr), fflush(stdout);
     }
 }

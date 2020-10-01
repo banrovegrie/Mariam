@@ -42,8 +42,8 @@ int BGPRO(char **args)
             perror("error in command");
             return 0;
         }
+        _exit(0);
     }
 
-    fflush(stdout);
     return 0;
 }
