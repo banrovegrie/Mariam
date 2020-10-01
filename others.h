@@ -30,6 +30,12 @@ as well as several macros used in the project.
 #define user_max 100
 #define path_max 100000
 
+//Check Redirection
+void check_redirection(char **args);
+
+//Do Stuff I Guess
+void DO(char **args);
+
 //Function for cd
 int CD(char **args);
 
@@ -50,12 +56,7 @@ int LSL(char *directory, int A);
 
 int LSMAIN(char **args);
 
-//PROCESS RELATED FUNCTIONS
-int FGPRO(char **args);
-
 int BGPRO(char **args);
-
-int PRO(char **args);
 
 //SIGNAL HANDLING
 void FUNC_H(int signum);

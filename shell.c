@@ -27,16 +27,6 @@ void parse(char *line, char **args, char *d)
 int initialise()
 {
     gethostname(systemname, host_max);
-
-    /*struct utsname uts;
-    int sysname = uname(&uts);
-    if (sysname != 0)
-    {
-        perror("Error:");
-        exit(1);
-    }
-    strcpy(systemname, uts.sysname);*/
-
     getlogin_r(username, user_max);
     getcwd(home, path_max);
     return 0;
@@ -71,27 +61,21 @@ int UI()
 
 void execute(char *line)
 {
-    //size_t buff_size = 1000;
-    //char *echo_line = (char *) malloc(buff_size * sizeof(char));
-    //strcpy(echo_line, line);
-
     char *args[100] = {NULL};
     char d[10] = " \t\n";
     parse(line, args, d);
 
-    if (strcmp(args[0], "exit") == 0)
-        exit(0);
-    else if (strcmp(args[0], "cd") == 0)
-        CD(args);
-    else if (strcmp(args[0], "pwd") == 0)
-        PWD();
-    else if (strcmp(args[0], "echo") == 0)
-        ECHO(args);
-    else if (strcmp(args[0], "pinfo") == 0)
-        PINFO(args);
-    else if (strcmp(args[0], "ls") == 0)
-        LSMAIN(args);
-    else PRO(args);
+    int bg_flag = 0;
+    for (int i = 1; args[i] != NULL; i++)
+    {
+        if (strcmp(args[i], "&") == 0)
+        {
+            bg_flag = 1;
+            break;
+        }
+    }
+    if (bg_flag) BGPRO(args);
+    else check_redirection(args);
 }
 
 int main(int argc, char *argv[])

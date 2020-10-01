@@ -66,22 +66,6 @@ int PINFO(char **args)
 
     free(foo);
 
-    /*pid_t pid = fork();
-    if (pid < 0)
-    {
-        perror("error in forking");
-        return 0;
-    } else if (pid == 0)
-    {
-        if (execvp(*final, final) < 0)
-        {
-            perror("pinfo error");
-            return 0;
-        }
-    } else
-        wait(&flag);*/
-    
-
     free(test);
     printf("Executable Path --- %s\n", buff);
     fflush(stdout);
