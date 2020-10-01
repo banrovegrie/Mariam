@@ -67,18 +67,22 @@ void execute(char *line)
 
     if (strcmp(args[0], "exit") == 0)
         exit(0);
-
-    int bg_flag = 0;
-    for (int i = 1; args[i] != NULL; i++)
+    else if (strcmp(args[0], "cd") == 0)
+        CD(args);
+    else 
     {
-        if (strcmp(args[i], "&") == 0)
+        int bg_flag = 0;
+        for (int i = 1; args[i] != NULL; i++)
         {
-            bg_flag = 1;
-            break;
+            if (strcmp(args[i], "&") == 0)
+            {
+                bg_flag = 1;
+                break;
+            }
         }
+        if (bg_flag) BGPRO(args);
+        else check_redirection(args);
     }
-    if (bg_flag) BGPRO(args);
-    else check_redirection(args);
 }
 
 int main(int argc, char *argv[])
@@ -98,7 +102,7 @@ int main(int argc, char *argv[])
     {
         UI();
         dup2(f_stdin, 0), dup2(f_stdout, 1);
-        
+
         size_t buff_size = 1000;
         char *line = (char *) malloc(buff_size * sizeof(char));
         int r_value = read(0, line, buff_size * sizeof(char));
