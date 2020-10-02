@@ -33,6 +33,9 @@ as well as several macros used in the project.
 //Parser
 void parse(char *line, char **args, char *d);
 
+//Separator for redirection
+void tokenize_red(char **args, char **str, int f[]);
+
 //Check Redirection
 void check_redirection(char **args);
 

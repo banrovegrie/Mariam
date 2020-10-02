@@ -28,9 +28,13 @@ void DO(char **args)
 void check_redirection(char **args)
 {
 	char *str[100] = {NULL};
-	int f_in = 0, f_out = 1, f_stdin = dup(0), f_stdout = dup(1), index = 0;
+	int f_stdin = dup(0), f_stdout = dup(1), index = 0;
 
-	for (int i = 0; args[i] != NULL; i++)
+	int f_arr[2] = {0, 1};
+	tokenize_red(args, str, f_arr);
+
+	int f_in = f_arr[0], f_out = f_arr[1];
+	/*for (int i = 0; args[i] != NULL; i++)
 	{
 		if (args[i][0] == '<')
 		{
@@ -68,7 +72,7 @@ void check_redirection(char **args)
 		{
 			str[index++] = strdup(args[i]); 
 		}
-	}
+	}*/
 
 	dup2(f_in, 0), dup2(f_out, 1);
 
