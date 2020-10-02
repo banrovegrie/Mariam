@@ -34,46 +34,6 @@ void check_redirection(char **args)
 	tokenize_red(args, str, f_arr);
 
 	int f_in = f_arr[0], f_out = f_arr[1];
-	/*for (int i = 0; args[i] != NULL; i++)
-	{
-		if (args[i][0] == '<')
-		{
-			f_in = open(args[i + 1], O_RDONLY);
-			if (f_in == -1)
-			{
-				perror("error in opening file");
-				return;
-			}
-			i++;
-		}
-		else if (args[i][0] == '>')
-		{
-			if (sizeof(args[i]) > (int)(2 * sizeof(char)) && args[i][1] == '>')
-			{
-				f_out = open(args[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-				if (f_out == -1)
-				{
-					perror("error in creating/opening file");
-					return;
-				}
-			}
-			else
-			{
-				f_out = creat(args[i + 1], 0644); 
-				if (f_out == -1)
-				{
-					perror("error in creating/opening file");
-					return;
-				}
-			}
-			i++;
-		}
-		else
-		{
-			str[index++] = strdup(args[i]); 
-		}
-	}*/
-
 	dup2(f_in, 0), dup2(f_out, 1);
 
 	int pid = fork();
@@ -110,7 +70,7 @@ void PIPE(char *line, char **args)
 	}	
 	else
 	{
-		int old_fd_in = 0, f_stdin = dup(0), f_stdout = dup(1), i = 0;
+		int f_in = 0, f_stdin = dup(0), f_stdout = dup(1), i = 0;
 
 		for (i = 0; block[i + 1] != NULL; i++)
 		{
@@ -121,8 +81,21 @@ void PIPE(char *line, char **args)
 				return;
 			}
 
-			char *str[50] = {NULL};
-			parse(block[i], str, " \t\n");
+			char *arr[50] = {NULL};
+			char *str[100] = {NULL};
+			parse(block[i], arr, " \t\n");
+
+			if (i == 0) //imput redirection exits only for i = 0
+			{
+				int f_arr[2] = {0, 1};
+				tokenize_red(arr, str, f_arr);
+				f_in = f_arr[0];
+				if (f_arr[1] != 1)
+				{
+					perror("error in piping syntax");
+					return;
+				}
+			}
 
 			if ((id = fork()) < 0)
 			{
@@ -133,7 +106,7 @@ void PIPE(char *line, char **args)
 			{
 				/* Child Process */
 				close(fd[0]);
-				dup2(old_fd_in, 0), dup2(fd[1], 1);
+				dup2(f_in, 0), dup2(fd[1], 1);
 				DO(str);	
 			}
 			else
@@ -144,12 +117,26 @@ void PIPE(char *line, char **args)
 				/* Parent Process */
 				close(fd[1]);
 				waitpid(id, NULL, 0);
-				old_fd_in = fd[0];
+				f_in = fd[0];
 			}
 		}
 
-		char *str[50] = {NULL};
-		parse(block[i], str, " \t\n");
+		char *arr[50] = {NULL};
+		char *str[100] = {NULL};
+		parse(block[i], arr, " \t\n");
+		int f_arr[2] = {0, 1}, f_out = 1;
+		tokenize_red(arr, str, f_arr);
+
+		if (f_arr[1] != 1)
+			f_out = f_arr[1];
+		else
+			f_out = f_stdout;
+		if (f_arr[0] != 0)
+		{
+			perror("error in piping syntax");
+			return;
+		}
+
 
 		int id;
 		if ((id = fork()) < 0)
@@ -159,8 +146,8 @@ void PIPE(char *line, char **args)
 		}
 		else if (id == 0)
 		{
-			/* Child Process */
-			dup2(old_fd_in, 0), dup2(f_stdout, 1);
+			// Child Process 
+			dup2(f_in, 0), dup2(f_out, 1);
 			DO(str);
 		}
 		else
@@ -168,9 +155,9 @@ void PIPE(char *line, char **args)
 			signal(SIGINT, SIG_DFL);
 	    	signal(SIGTSTP, SIG_DFL);
 
-			/* Parent Process */
+			// Parent Process 
 			waitpid(id, NULL, 0);
-		    dup2(f_stdin, 0), dup2(f_stdout, 1);
+			dup2(f_stdin, 0), dup2(f_stdout, 1);
 		}
 	}
 
