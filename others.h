@@ -30,6 +30,18 @@ as well as several macros used in the project.
 #define user_max 100
 #define path_max 100000
 
+struct Node
+{
+	pid_t pid;
+	char *name;
+	int stat;
+};
+
+//set and unset environment variables
+void SETENV(char **args);
+void UNSETENV(char **args);
+void GETENV(char **args);
+
 //Parser
 void parse(char *line, char **args, char *d);
 
@@ -69,3 +81,10 @@ int BGPRO(char **args);
 
 //SIGNAL HANDLING
 void FUNC_H(int signum);
+
+//Jobs stuff
+void jobs_updated();
+void status_update(pid_t pid, int status);
+void display_jobs();
+void job_overkill();
+char* process_name(pid_t pid);

@@ -15,10 +15,11 @@ void FUNC_H(int signum)
         exit(1);
     } else if (signum == SIGCHLD)
     {
+        jobs_updated();
         /*
          * Child handling in particular with associated status and PID
          */
-        while (waitpid(-1, &status, WNOHANG | WUNTRACED | WCONTINUED) > 0)
+        while ((PID = waitpid(-1, &status, WNOHANG | WUNTRACED | WCONTINUED)) > 0)
         {
             if (WIFEXITED(status))
                 fprintf(stderr, "\npid: %d exited, status = %d\n", PID, WEXITSTATUS(status));
@@ -28,7 +29,8 @@ void FUNC_H(int signum)
                 fprintf(stderr, "\npid: %d stopped by signal %d\n", PID, WSTOPSIG(status));
             else if (WIFCONTINUED(status))
                 fprintf(stderr, "\npid: %d continued\n", PID);
-        
+            
+            status_update(PID, status);
             return;
         }
     }

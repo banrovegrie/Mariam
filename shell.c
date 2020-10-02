@@ -9,12 +9,16 @@
  */
 
 char systemname[host_max], username[user_max], home[path_max], path[path_max];
+char prev_path[path_max], curr_path[path_max];
+struct Node process[100];
+int n_jobs;
 
 int initialise()
 {
     gethostname(systemname, host_max);
     getlogin_r(username, user_max);
     getcwd(home, path_max);
+    strcpy(prev_path, home);
     return 0;
 }
 
@@ -57,6 +61,16 @@ void execute(char *line)
         exit(0);
     else if (strcmp(args[0], "cd") == 0)
         CD(args);
+    else if (strcmp(args[0], "setenv") == 0)
+        SETENV(args);
+    else if (strcmp(args[0], "unsetenv") == 0)
+        UNSETENV(args);
+    else if (strcmp(args[0], "getenv") == 0)
+        GETENV(args);
+    else if (strcmp(args[0], "jobs") == 0)
+        display_jobs();
+    else if (strcmp(args[0], "overkill") == 0)
+        job_overkill();
     else 
     {
         int bg_flag = 0;
@@ -95,6 +109,10 @@ int main(int argc, char *argv[])
         size_t buff_size = 1000;
         char *line = (char *) malloc(buff_size * sizeof(char));
         int r_value = read(0, line, buff_size * sizeof(char));
+
+        if(r_value == 0) 
+            exit(0);
+
         line = realloc(line, (sizeof(char) * (r_value + 1)));
         line[r_value] = '\0';
 
@@ -107,6 +125,7 @@ int main(int argc, char *argv[])
             execute(block[i]);
         }
 
+        jobs_updated();
         fflush(stdin), fflush(stderr), fflush(stdout);
     }
 }
