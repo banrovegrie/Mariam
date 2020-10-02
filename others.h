@@ -30,11 +30,17 @@ as well as several macros used in the project.
 #define user_max 100
 #define path_max 100000
 
+//Parser
+void parse(char *line, char **args, char *d);
+
 //Check Redirection
 void check_redirection(char **args);
 
 //Do Stuff I Guess
 void DO(char **args);
+
+//Piping
+void PIPE(char *line, char **args);
 
 //Function for cd
 int CD(char **args);

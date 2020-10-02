@@ -10,20 +10,6 @@
 
 char systemname[host_max], username[user_max], home[path_max], path[path_max];
 
-void parse(char *line, char **args, char *d)
-{
-    int index = 0;
-    char *END;
-    char *foo = strtok_r(line, d, &END);
-
-    while (foo != NULL)
-    {
-        args[index] = foo, foo = strtok_r(NULL, d, &END);
-        index += 1;
-    }
-    fflush(stdout);
-}
-
 int initialise()
 {
     gethostname(systemname, host_max);
@@ -61,6 +47,8 @@ int UI()
 
 void execute(char *line)
 {
+    char *block = strdup(line);
+
     char *args[100] = {NULL};
     char d[10] = " \t\n";
     parse(line, args, d);
@@ -81,7 +69,8 @@ void execute(char *line)
             }
         }
         if (bg_flag) BGPRO(args);
-        else check_redirection(args);
+        //else check_redirection(args);
+        else PIPE(block, args);
     }
 }
 
