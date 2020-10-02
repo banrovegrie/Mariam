@@ -29,12 +29,13 @@ int BGPRO(char **args)
 
     if (pid)
     {
-        signal(SIGINT, SIG_DFL);
-        signal(SIGTSTP, SIG_DFL);
         return 0;
     }
     else
     {
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTSTP, SIG_DFL);
+        
         if (setpgid(0, 0) == -1)
         {
             perror("error in orphaning child");
